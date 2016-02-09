@@ -49,8 +49,6 @@
 			// ];
 
 			//update video url based on start time and end time
-			// updateUrl();
-
 			function updateUrl(){
 				angular.forEach($scope.items, function(value){
 					if(value.type === 'clip'){
