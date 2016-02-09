@@ -6,7 +6,7 @@ http://xywvideo.appspot.com/
 
 *  Run locally:
  *  Install google appengine
- *  Use bower install to install the 3rd js library
+ *  Use ``bower install`` to install the 3rd js library
 
 *  Features include:
  *  An HTML5 video player that utilizes media fragments
