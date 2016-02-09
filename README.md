@@ -1,14 +1,14 @@
 # videoControl
 test html5 video features
 
-# Video the demo remotely at:
+* Video the demo remotely at:
 http://xywvideo.appspot.com/
 
-# Run locally:
+*  Run locally:
 Install google appengine
 Use bower install to install the 3rd js library
 
-# Features include:
+*  Features include:
 ● An HTML5 video player that utilizes media fragments
 ● A list of clips to be played in the video player
 ● The first item in the list should be the full video
