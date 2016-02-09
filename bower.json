@@ -1,0 +1,13 @@
+{
+  "name": "videoControl",
+  "version": "0.0.1",
+  "homepage": "https://github.com/yyunyun75/videoControl",
+  "authors": [
+    "Leslie Lee <yyunyun75@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "angular": "~1.5.0",
+    "angular-bootstrap": "~1.1.2"
+  }
+}

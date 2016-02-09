@@ -1,0 +1,101 @@
+body{
+	font-family: 'Open Sans', Helvetica,Arial,sans-serif;
+	background-color: #181818;
+	color: white;
+}
+
+h1{
+	font-size: 52px;
+	margin: 120px auto 20px;
+}
+
+#mainDiv{
+	box-shadow: inset -1px 0px 62px -20px #000000;
+	-webkit-box-shadow: inset -1px 0px 62px -20px #000000;
+	-moz-box-shadow: inset -1px 0px 62px -20px #000000;
+	-o-box-shadow: inset -1px 0px 62px -20px #000000;
+	border: solid 1px rgba(100,100,100,.6);
+	outline: 1px solid #000;
+	background-color: #AAA;
+	height: 547px;
+}
+
+#mainDiv .vd-wrapper{
+	background-color: #181818;
+}
+
+.items{
+	width: 100%;
+	height: 80%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.items li {
+	margin: 10px 10px 10px 0px;
+	color: #181818;
+	box-shadow: inset -1px 0px 62px -20px #000000;
+	-webkit-box-shadow: inset -1px 0px 62px -20px #000000;
+	-moz-box-shadow: inset -1px 0px 62px -20px #000000;
+	-o-box-shadow: inset -1px 0px 62px -20px #000000;
+	outline: solid 1px rgba(100,100,100,.6);
+	border-bottom: 1px solid #111;
+	cursor: pointer;
+}
+
+.items li.active{
+	border-bottom: 2px solid #c9302c;
+}
+
+.items li h5{
+	text-transform: capitalize;
+	font-weight: bold;
+}
+
+.items li p{
+	font-size: 12px;
+}
+
+.items .info{
+	padding-left: 20px;
+}
+
+.items .thumb{
+	position: relative;
+}
+
+.items .thumb span.glyphicon-play{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	color: #CCC;
+	margin-left: -7px;
+	margin-top: -7px;
+}
+
+#mainDiv .vd-lst{
+	position: relative;
+	height: 100%;
+}
+
+.vd-lst .form-horizontal{
+	margin-top: 10px;
+}
+
+.vd-lst .pull-right span{
+	margin: 0px 10px;
+}
+
+#lst-control{
+	position: absolute;
+	bottom: 5px;
+	width: 100%;
+}
+
+#lst-control .btnAdd{
+	width: 100%;
+}
+
+.modal-content{
+	color: black;
+}

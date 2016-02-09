@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="videoApp">
+<head>
+    <!--META-->
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--TITLE-->
+    <title>Video Player</title>
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:700,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/app.css">
+</head>
+<body data-ng-controller="playerCtrl">
+	<div class="container">
+		<div class="row text-center">
+			<h1>Video Player Demo</h1>
+		</div>
+		<div class="row text-center" id="mainDiv">
+			<div class="col-sm-8 vd-wrapper">
+				<video id="vd" controls ng-src="{{items[activeId].url | trustUrl}}" width="720px" height="540px" autoplay>
+				</video>
+			</div>
+			<div class="col-sm-4 vd-lst">
+				<!--form class="form-horizontal">
+					 <div class="form-group">
+					 	<div class="col-sm-9">
+					 		<input type="text" class="form-control" id="tags" ng-model="tags">
+					 	</div>
+					 	<div class="col-sm-3">
+					 		<button type="submit" class="btn btn-primary">Search</button>
+					 	</div>
+					 </div>					 	
+				</form-->
+				<ul class="list-unstyled items">
+	                <li data-ng-repeat="(idx, item) in items" ng-class="{active: idx== activeId}">
+	                	<div class="row">
+	                		<div class="col-sm-4 text-left">
+	                			<a href="javascript:;" data-ng-click="load(idx)" class="thumb">
+	                    			<img ng-src="assets/images/{{item.thumb||'thumb.jpg'}}">
+	                    			<span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+	                   			 </a>
+	                		</div>
+	                		<div class="col-sm-8 text-left info">
+	                			<h5 data-ng-click="load(idx)">{{item.title}}</h5>
+	                			<p ng-show="item.type == 'clip'" data-ng-click="load(idx)">
+	                				<strong>Start:</strong> {{item.start}}  
+	                				 | 
+	                				<strong>End:</strong> {{item.end}} 
+	                			</p>
+	                			<p class="pull-right" ng-show="item.type == 'clip'">
+	                				<span class="glyphicon glyphicon-trash" data-ng-click="delete(idx)" aria-hidden="true"></span> 
+	                				<span class="glyphicon glyphicon-edit" data-ng-click="edit(idx)" aria-hidden="true"></span>
+	                			</p>                			
+	                		</div>
+	                	</div>
+	                </li>
+				</ul>
+				<div class="row" id="lst-control">
+					<div class="col-sm-12">
+	                	<button class="btn btn-danger btnAdd" type="button" data-ng-click="add()">Add More Clip</button>
+	            	</div>
+	            </div>
+			</div>
+		</div>
+	</div>
+	<script type="text/ng-template" id="mDelete.html">
+	    <div class="modal-header">
+	        <h3 class="modal-title">{{item.title}}</h3>
+	    </div>
+	    <div class="modal-body">
+	    	Are you sure you want to delete this clip?
+	    </div>
+	    <div class="modal-footer">
+	        <button class="btn btn-primary" type="button" ng-click="ok()">Yes</button>
+	        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+	    </div>
+	</script>
+	<script type="text/ng-template" id="mEdit.html">
+	    <div class="modal-header">
+	        <h3 class="modal-title">Video duration: {{duration}}</h3>
+	    </div>
+	    <div class="modal-body">
+		    <form class="form-horizontal" name="updateFrm">
+		    	<div class="form-group" ng-class="{'has-error': updateFrm.title.$invalid}">
+		    		<label class="col-sm-2">Title:</label>
+		    		<div class="col-sm-10">
+		    			<input type="text" class="form-control" ng-model="item.title" name="title" required>
+		    		</div>
+		    	</div>
+		    	<div class="form-group">
+		    		<label class="col-sm-2">Start:</label>
+		    		<div class="col-sm-4" ng-class="{'has-error': updateFrm.start.$invalid}">
+		    			<input type="number" class="form-control" ng-model="item.start" min="0" max="{{duration}}" name="start">
+		    		</div>
+		    		<label class="col-sm-2">End:</label>
+		    		<div class="col-sm-4" ng-class="{'has-error': updateFrm.end.$invalid}">
+		    			<input type="number" class="form-control" ng-model="item.end" type="number" min="0" max="{{duration}}" name="end">
+		    		</div>
+		    	</div>
+		    	<div class="form-group">
+		    		<label class="col-sm-2">Tags:</label>
+		    		<div class="col-sm-10">
+		    			<input type="text" class="form-control" ng-model="item.tags">
+		    		</div>
+		    	</div>		    			    	
+		    </form>
+	    </div>
+	    <div class="modal-footer">
+	        <button class="btn btn-primary" type="button" ng-click="ok()" ng-disabled="!updateFrm.$valid">Done</button>
+	        <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+	    </div>
+	</script>
+<script src="lib/angular/angular.min.js"></script>
+<script src="lib/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="app/app.js"></script>
+</body>
+</html>
