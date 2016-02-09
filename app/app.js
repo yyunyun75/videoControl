@@ -1,7 +1,7 @@
 'use strict';
 (function(angular){
 
-	var app = angular.module('videoApp', ['ui.bootstrap']);
+	var app = angular.module('videoApp', ['ui.bootstrap', 'firebase']);
 
 	app.filter("trustUrl", ['$sce', function ($sce) {
         return function (recordingUrl) {
@@ -9,9 +9,17 @@
         };
     }]);
 
-	app.controller('playerCtrl', ['$scope', '$uibModal','$timeout',
-		function($scope, $uibModal, $timeout){
+	app.controller('playerCtrl', ['$scope', '$uibModal','$timeout','$firebaseArray',
+		function($scope, $uibModal, $timeout, $firebaseArray){
 			var video = document.getElementById('vd');
+			var ref = new Firebase("https://xywvideo.firebaseio.com/videos");
+			var query = ref.orderByChild("created");
+
+			$scope.items = $firebaseArray(query);
+
+			$scope.items.$loaded().then(function(data){
+				updateUrl();
+			});
 
 			video.oncanplay = function(){
 				$scope.duration = video.duration;
@@ -34,14 +42,14 @@
 			$scope.isLoading = false;
 
 			//hard code list of video clips
-			$scope.items =[
-				{ title: 'sintel trailer full', type : 'video', thumb: 'thumb.jpg', url: 'http://grochtdreis.de/fuer-jsfiddle/video/sintel_trailer-480.mp4'},
-				{ title: 'sintel trailer clip1', type : 'clip', thumb: 'thumb.jpg', start: 6, end: 12},
-				{ title: 'sintel trailer clip2', type : 'clip', thumb: 'thumb.jpg', start: 16, end: 26, tags: 'me'}
-			];
+			// $scope.items =[
+			// 	{ title: 'sintel trailer full', type : 'video', thumb: 'thumb.jpg', url: 'http://grochtdreis.de/fuer-jsfiddle/video/sintel_trailer-480.mp4'},
+			// 	{ title: 'sintel trailer clip1', type : 'clip', thumb: 'thumb.jpg', start: 6, end: 12},
+			// 	{ title: 'sintel trailer clip2', type : 'clip', thumb: 'thumb.jpg', start: 16, end: 26, tags: 'me'}
+			// ];
 
 			//update video url based on start time and end time
-			updateUrl();
+			// updateUrl();
 
 			function updateUrl(){
 				angular.forEach($scope.items, function(value){
@@ -81,11 +89,13 @@
 					}
 				});
 
-				modalDelete.result.then(function(idx){
-					$scope.items.splice(idx, 1);
-					if(idx == $scope.activeId){
+				modalDelete.result.then(function(data){
+					$scope.items.$remove(data.item).then(function(ref){
+						console.log(data.item.$id);
+					})
+					if(data.idx == $scope.activeId){
 						$scope.load(0);
-					}else if(idx < $scope.activeId){
+					}else if(data.idx < $scope.activeId){
 						$scope.activeId--;
 					}					
 				});
@@ -111,8 +121,10 @@
 					}
 				});
 
-				modalEdit.result.then(function(item){
-					updateUrl();
+				modalEdit.result.then(function(data){
+					$scope.items.$save(data.item).then(function(ref){
+						updateUrl();
+					})
 				})
 			}
 
@@ -131,8 +143,10 @@
 				});
 
 				modalAdd.result.then(function(item){
-					$scope.items.push(item);
-					updateUrl();
+					// $scope.items.push(item);
+					$scope.items.$add(item).then(function(ref){
+						updateUrl();
+					});					
 				});
 			}
 
@@ -144,7 +158,7 @@
 			$scope.item = item;
 			$scope.duration = duration;
 			$scope.ok = function(){
-				$uibModalInstance.close(idx);
+				$uibModalInstance.close({'item': item, 'idx': idx});
 			};
 			$scope.cancel = function(){
 				$uibModalInstance.dismiss('cancel');
@@ -153,7 +167,7 @@
 
 	app.controller('addCtrl', ['$scope', '$uibModalInstance', 'duration',
 		function($scope, $uibModalInstance, duration){
-			$scope.item = {'type': 'clip'};
+			$scope.item = {'type': 'clip', 'created': new Date().toJSON()};
 			$scope.duration = duration;
 			$scope.ok = function(){
 				$uibModalInstance.close($scope.item);
