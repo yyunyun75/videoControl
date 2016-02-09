@@ -20,6 +20,7 @@
 			<div class="col-sm-8 vd-wrapper">
 				<video id="vd" controls ng-src="{{items[activeId].url | trustUrl}}" width="720px" height="540px" autoplay>
 				</video>
+				<button class="btn btn-lg btn-warning btn-loading" ng-show="isLoading"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> Loading...</button>
 			</div>
 			<div class="col-sm-4 vd-lst">
 				<!--form class="form-horizontal">

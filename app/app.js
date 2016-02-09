@@ -9,21 +9,34 @@
         };
     }]);
 
-	app.controller('playerCtrl', ['$scope', '$uibModal',
-		function($scope, $uibModal){
+	app.controller('playerCtrl', ['$scope', '$uibModal','$timeout',
+		function($scope, $uibModal, $timeout){
 			var video = document.getElementById('vd');
 
 			video.oncanplay = function(){
 				$scope.duration = video.duration;
 			}
 
+			video.onpause = function() {
+			    if($scope.activeId+1 < $scope.items.length){
+				    $scope.$apply(function(){
+				    	$scope.isLoading = true;
+				    });
+				    $timeout(function(){
+				    	$scope.activeId++;
+				    	$scope.isLoading = false;
+				    }, 3000);
+				}
+			};
+
 			//default to start on the full video
 			$scope.activeId = 0;
+			$scope.isLoading = false;
 
 			//hard code list of video clips
 			$scope.items =[
 				{ title: 'sintel trailer full', type : 'video', thumb: 'thumb.jpg', url: 'http://grochtdreis.de/fuer-jsfiddle/video/sintel_trailer-480.mp4'},
-				{ title: 'sintel trailer clip1', type : 'clip', thumb: 'thumb.jpg', start: 6, end: 20},
+				{ title: 'sintel trailer clip1', type : 'clip', thumb: 'thumb.jpg', start: 6, end: 12},
 				{ title: 'sintel trailer clip2', type : 'clip', thumb: 'thumb.jpg', start: 16, end: 26, tags: 'me'}
 			];
 
