@@ -19,5 +19,5 @@ http://xywvideo.appspot.com/
 
 * Extra Features:
  *  The ability to automatically jump to the next clip after it finishes, with a 3 second waiting period and appropriate loading animation.
- *  The ability to ‘save’ clips for persistent use.
+ *  The ability to ‘save’ clips for persistent use. (use firebase)
  *  The ability to add arbitrary ‘tags’ to clips so that they can be filtered by the tag name.
